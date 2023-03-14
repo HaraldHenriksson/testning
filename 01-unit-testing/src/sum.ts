@@ -8,3 +8,4 @@ export const sum = (...numbers: number[]) => {
 
 	return sum
 }
+
