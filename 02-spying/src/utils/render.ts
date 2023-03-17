@@ -12,9 +12,6 @@ export const renderTodos = (todos: Todo[]) => {
 		document.querySelector<HTMLUListElement>('#todos')!,
 		transformTodosToHtml(todos)
 	)
-	// replace todosList content
-	const todosEl = document.querySelector<HTMLUListElement>('#todos')!
-	todosEl.innerHTML = transformTodosToHtml(todos)
 }
 
 // transform todos to HTML(-string)
