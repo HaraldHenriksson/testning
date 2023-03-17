@@ -1,9 +1,13 @@
+/**
+ * @vitest-environment happy-dom
+ */
+
 import { describe, test, expect, afterEach, vi } from 'vitest'
-import mockedLocalStorage from '../mocks/mockedLocalStorage'
+// import mockedLocalStorage from '../mocks/mockedLocalStorage'
 import { Todo } from '../types/Todo'
 import { getTodos, saveTodos } from '../utils/todoStorage'
 
-global.localStorage = mockedLocalStorage()
+// global.localStorage = mockedLocalStorage()
 
 const TODO: Todo = {
 	id: 1,
