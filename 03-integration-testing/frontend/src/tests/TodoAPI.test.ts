@@ -28,11 +28,16 @@ describe('TodoAPI', () => {
 
 		const thatTodo = await TodoAPI.getTodo(todo.id)
 
+		expect(todo).toStrictEqual(thatTodo)
 		expect(thatTodo.id).toEqual(todo.id)
 	})
 
-	it.todo('should create and then find the todo among all todos', () => {
+	it.todo('should create and then find the todo among all todos', async () => {
+		const todo = await TodoAPI.createTodo(newTodo)
 
+		const todos = await TodoAPI.getTodos()
+
+		expect(todos).toContainEqual(todo)
 	})
 
 	it.todo('should create and then update a todo', async () => {
@@ -45,18 +50,21 @@ describe('TodoAPI', () => {
 
 		const updatedTodo = await TodoAPI.updateTodo(todo.id, updateData)
 
-		expect(updatedTodo).toMatchObject({
-			id: expect.any(Number),
-			title: updatedTodo.title,
-			completed: updatedTodo.completed
-		})
+		expect(
+			updatedTodo).toMatchObject({
+				id: updatedTodo.id,
+				title: updatedTodo.title,
+				completed: updatedTodo.completed
+			})
 	})
 
 	it.todo('should create and then delete a todo', async () => {
 		const todo = await TodoAPI.createTodo(newTodo)
 
-		const deletedTodo = await TodoAPI.deleteTodo(todo.id)
+		await TodoAPI.deleteTodo(todo.id)
 
-		expect(deletedTodo.id).toEqual(todo.id)
+		const todos = await TodoAPI.getTodos
+
+		expect(todos).not.toContainEqual(todo)
 	})
 })
