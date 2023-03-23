@@ -20,6 +20,24 @@ export const handlers = [
 
 	// Mock get single todo
 	// GET http://localhost:3001/todos/:todoId
+	rest.get(BASE_URL + '/todos/:todoId', (req, res, ctx) => {
+		const todoId = Number(req.params.todoId)
+
+		// find the todo among todos
+		const todo = dummyTodos.find(todo => todo.id === todoId)
+
+		if (!todo) {
+			return res(
+				ctx.json({})
+			)
+		}
+
+		// resopond with todo
+		return res(
+			ctx.status(200),
+			ctx.json(todo)
+		)
+	}),
 
 	// Mock create todo
 	// POST http://localhost:3001/todos
@@ -27,7 +45,7 @@ export const handlers = [
 		const payload = await req.json<TodoData>()
 
 		// find next id
-		const id = Math.max(...dummyTodos.map(todo => todo.id)) + 1
+		const id = Math.max(0, ...dummyTodos.map(todo => todo.id)) + 1
 
 		// create our new dummy todo
 		const todo: Todo = {
