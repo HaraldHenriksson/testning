@@ -27,9 +27,9 @@ export const transformTodosToHtml = (todos: Todo[]) => {
 			`<li class="list-group-item todo ${todo.completed ? 'completed' : ''}" data-todo-id="${todo.id}">
 				<span class="todo-title">${todo.title}</span>
 				${todo.completed
-					? '<span class="delete-todo" role="button" title="Delete todo">🗑️</span>'
-					: ''
-				}
+				? '<span class="delete-todo" role="button" title="Delete todo">🗑️</span>'
+				: ''
+			}
 			</li>`
 		)
 		.join('')

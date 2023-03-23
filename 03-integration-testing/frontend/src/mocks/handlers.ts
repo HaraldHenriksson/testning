@@ -23,16 +23,18 @@ export const handlers = [
 	rest.get(BASE_URL + '/todos/:todoId', (req, res, ctx) => {
 		const todoId = Number(req.params.todoId)
 
-		// find the todo among todos
+		// find the todo among the dummyTodos
 		const todo = dummyTodos.find(todo => todo.id === todoId)
 
+		// if todo didn't exist, respond with 404
 		if (!todo) {
 			return res(
+				ctx.status(404),
 				ctx.json({})
 			)
 		}
 
-		// resopond with todo
+		// respond with todo
 		return res(
 			ctx.status(200),
 			ctx.json(todo)
@@ -62,11 +64,55 @@ export const handlers = [
 			ctx.status(201),
 			ctx.json(todo)
 		)
-	})
+	}),
 
 	// Mock update todo
-	// PATCH http://localhost:3001/todos/:id
+	// PATCH http://localhost:3001/todos/:todoId
+	rest.patch(BASE_URL + '/todos/:todoId', async (req, res, ctx) => {
+		const todoId = Number(req.params.todoId)
+		const payload = await req.json<Partial<TodoData>>()
+
+		// find the todo among the dummy-todos
+		const todo = dummyTodos.find(todo => todo.id === todoId)
+
+		if (!todo) {
+			return res(
+				ctx.status(404),
+				ctx.json({})
+			)
+		}
+
+		// update todo with payload
+		todo.title = payload.title ?? todo.title
+		todo.completed = payload.completed ?? todo.completed
+
+		return res(
+			ctx.status(200),
+			ctx.json(todo)
+		)
+	}),
 
 	// Mock delete todo
-	// DELETE http://localhost:3001/todos/:id
+	// DELETE http://localhost:3001/todos/:todoId
+	rest.delete(BASE_URL + '/todos/:todoId', (req, res, ctx) => {
+		const todoId = Number(req.params.todoId)
+
+		// find the todo among the dummy-todos
+		const todo = dummyTodos.find(todo => todo.id === todoId)
+
+		if (!todo) {
+			return res(
+				ctx.status(404),
+				ctx.json({})
+			)
+		}
+
+		// remove todo from the dummy-todos array
+		dummyTodos.splice(dummyTodos.indexOf(todo), 1)
+
+		return res(
+			ctx.status(200),
+			ctx.json({})
+		)
+	}),
 ]
