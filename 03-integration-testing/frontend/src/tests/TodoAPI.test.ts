@@ -31,6 +31,16 @@ describe('TodoAPI', () => {
 		expect(Array.isArray(todos)).toBe(true)
 	})
 
+	it('should create a todo', async () => {
+		const todo = await TodoAPI.createTodo(newTodo)
+
+		expect(todo).toMatchObject({
+			id: expect.any(Number),
+			title: newTodo.title,
+			completed: newTodo.completed,
+		})
+	})
+
 	/*
 	it('should create a todo', async () => {
 		const todo = await TodoAPI.createTodo(newTodo)
